@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: black;
+  font-family: helvetica, verdana, arial, sans-serif;
+}
+
+#wrapper {
+  width: 100%;
+  width: calc(100% - 120px);
+  margin: 0 auto;
+  min-height: 700px;
+  background: white;
+}
+h1 { padding: 15px 15px 0;}
+form {
+  padding: 15px;
+}
+.player {
+  border-radius: 8px;
+  border: 1px solid black;
+  background: lightyellow;
+  width: 200px;
+  height: 200px;
+  padding: 5px;
+  margin: 20px;
+}
+.player:hover {
+  box-shadow: 0 0 8px 8px rgba(0,0,0,.3);
+}

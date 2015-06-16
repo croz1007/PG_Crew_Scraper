@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Columbus Crew Team Roster API</title>
+  <link rel="stylesheet" type="text/css" href="../css/styles.css" />
+</head>
+<body>
+    <div id="wrapper">
+      <h1>Columbus Crew Players List</h1>
+      <hr />
+      <div id="players"></div>
+      <form action='/'>
+          <button>Back to Player List</button>
+      </form>
+      <br />
+    </div>
+    <script id="playerTemplate" type='text/x-jquery-tmpl'>
+        <div class="player">
+          <h3>${ name } : #${num} - ${ pos }</h3>
+          <hr />
+          <img src="http://www.columbuscrewsc.com/sites/columbus/files/imagecache/player_profile_headshot/players/head-shots/${parseName(name)}_${num}.jpg" alt="Player Image" title="" class="playerImage">
+          <div id="playerData">
+            <p><strong>Age: </strong> ${ age }<p>
+            <p><strong>Height: </strong> ${ height }<p>
+            <p><strong>Weight: </strong> ${ weight }<p>
+            <p><strong>Birthplace: </strong> ${ birthplace }<p>
+          </div>
+        </div>
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../js/jquery.tmpl.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script>
+      $(function(){
+        getPlayer(<%= @id %>);
+      });
+    </script>
+</body>
+</html>
