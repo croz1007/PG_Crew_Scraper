@@ -5,7 +5,7 @@ require 'open-uri'
 require_relative 'player'
 
 get '/' do
-  File.read(File.join("public", 'index.html'))
+  erb :index
 end
 
 #list all players
@@ -24,7 +24,6 @@ get '/players/:id' do
 end
 
 get  '/player/:id' do
-  #File.read(File.join("public", 'player.html'))
   @player = Player.new
   @player.find(params[:id]).to_json
   @id = params[:id]
