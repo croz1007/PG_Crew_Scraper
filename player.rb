@@ -21,7 +21,7 @@ class Player
   end
 
   def getPlayers
-      all = @@page.css(".views-table tr")
+      all = @@page.css(".player_info")
 
       if all.length > 0
         players = Array.new
@@ -29,13 +29,13 @@ class Player
         all.each_with_index.map do |player, index|
 
           if index != 0
-            name = player.css(".views-field-field-player-lname-value").css("a").text.strip
-            num = player.css(".views-field-field-player-jersey-no-value").text.strip
-            pos = player.css(".views-field-field-player-position-detail-value").text.strip
-            age = player.css(".views-field-field-player-birth-date-value-1").text.strip
-            birthplace = player.css(".views-field-field-player-birth-country-value").text.strip
-            height = player.css(".views-field-field-player-height-value").text.strip
-            weight = player.css(".views-field-field-player-weight-value").text.strip
+            name = player.css(".name").css("a").text.strip
+            num = player.css(".jersey").text.strip
+            pos = player.css(".position").text.strip
+            age = player.css(".age").text.strip
+            birthplace = player.css(".hometown").text.strip
+            height = player.css(".height").text.strip
+            weight = player.css(".weight").text.strip
 
             player = {id: index, name: name, num: num, pos: pos, age: age, birthplace: birthplace, height: height, weight: weight}
             players.push(player)

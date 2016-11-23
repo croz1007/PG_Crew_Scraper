@@ -3,7 +3,7 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Columbus Crew Team Roster API
-    %link{:href => "../css/styles.css", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "../stylesheets/styles.css", :rel => "stylesheet", :type => "text/css"}/
   %body
     #wrapper
       %h1 Columbus Crew Players List
@@ -12,7 +12,7 @@
       %form{:action => "/"}
         %button Back to Player List
     %script#playerTemplate{:type => "text/x-jquery-tmpl"}
-      :cdata
+      :plain
         <div class="player">
         <h3>${ name } : #${num} - ${ pos }</h3>
         <hr />
