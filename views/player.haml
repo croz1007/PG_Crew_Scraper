@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Columbus Crew Team Roster API
+    %link{:href => "../css/styles.css", :rel => "stylesheet", :type => "text/css"}/
+  %body
+    #wrapper
+      %h1 Columbus Crew Players List
+      %hr/
+      #players
+      %form{:action => "/"}
+        %button Back to Player List
+    %script#playerTemplate{:type => "text/x-jquery-tmpl"}
+      :cdata
+        <div class="player">
+        <h3>${ name } : #${num} - ${ pos }</h3>
+        <hr />
+        <img src="http://www.columbuscrewsc.com/sites/columbus/files/imagecache/player_profile_headshot/players/head-shots/${parseName(name)}_${num}.jpg" alt="Player Image" title="" class="playerImage">
+        <div id="playerData">
+        <p><strong>Age: </strong> ${ age }<p>
+        <p><strong>Height: </strong> ${ height }<p>
+        <p><strong>Weight: </strong> ${ weight }<p>
+        <p><strong>Birthplace: </strong> ${ birthplace }<p>
+        </div>
+        </div>
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"}
+    %script{:src => "../js/jquery.tmpl.js"}
+    %script{:src => "../js/scripts.js"}
+    :javascript
+      $(function(){
+        getPlayer(#{@id});
+      });

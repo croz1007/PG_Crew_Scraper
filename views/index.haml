@@ -1,0 +1,30 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Columbus Crew Team Roster API
+    %link{:href => "../stylesheets/styles.css", :rel => "stylesheet", :type => "text/css"}/
+  %body
+    #wrapper
+      %h1 Columbus Crew Players List
+      %hr/
+      %form{:action => "/players"}
+        %button See JSON Data
+      #players
+    %script#playerTemplate{:type => "text/x-jquery-tmpl"}
+      :plain
+        <a href="/player/${ id }" class="card">
+        <h3>${ name } : #${num} - ${ pos }</h3>
+        <hr />
+        <p><strong>Age: </strong> ${ age }</p>
+        <p><strong>Height: </strong> ${ height }</p>
+        <p><strong>Weight: </strong> ${ weight }</p>
+        <p><strong>Birthplace: </strong> ${ birthplace }</p>
+        </a>
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"}
+    %script{:src => "js/jquery.tmpl.js"}
+    %script{:src => "js/scripts.js"}
+    :javascript
+      $(function(){
+        getPlayers();
+      });

@@ -5,7 +5,7 @@ require 'open-uri'
 require_relative 'player'
 
 get '/' do
-  erb :index
+  haml :index
 end
 
 #list all players
@@ -27,5 +27,5 @@ get  '/player/:id' do
   @player = Player.new
   @player.find(params[:id]).to_json
   @id = params[:id]
-  erb :player
+  haml :player
 end
