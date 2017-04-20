@@ -11,13 +11,13 @@ Using this API is very simple.
 =====
 Access the host site and then call the REST endpoint '/players'.
 
-*Example: http://fathomless-hollows-8511.herokuapp.com/players*
+*Example: https://crew-team-scraper.herokuapp.com/*
 
 **To GET a Specific Player by ID:**
 =====
 Access the host site and then call the REST endpoint '/players/:id'. Note that this ID is *NOT* the players jersey number but rather the ID in the dataset.
 
-*Example: http://fathomless-hollows-8511.herokuapp.com/players/5*
+*Example: https://crew-team-scraper.herokuapp.com/player/5*
 
 =====
 
