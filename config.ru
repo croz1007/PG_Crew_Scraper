@@ -1,9 +1,5 @@
-require 'sinatra'
-require 'haml'
-require 'sass/plugin/rack'
-require_relative 'scraper'
+# frozen_string_literal: true
 
-Sass::Plugin.options[:style] = :compressed
-use Sass::Plugin::Rack
+require_relative 'app'
 
-run Sinatra::Application
+run CrewScraperApp

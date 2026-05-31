@@ -1,33 +1,94 @@
-# Columbus Crew Players List
-![alt-text][logo]
+# Columbus Crew Roster Scraper
 
-### Description
-This API is a simple site scraper to hit the Columbus Crew players website and pull a full roster with stats like 'Age', 'Height', 'Weight', and more.
+Small Sinatra app that scrapes the live Columbus Crew roster page and exposes the roster as JSON, plus a simple browser UI.
 
-### Usage
-Using this API is very simple.
+## Scrape Source
 
-### To GET all players:
+- Target URL: `https://www.columbuscrew.com/roster/`
+- Scraping is live at request time (no local database).
 
-______
+## What The App Provides
 
-Access the host site and then call the REST endpoint '/players'.
+- Roster cards UI at `/`
+- Player detail UI at `/player/:id`
+- API endpoints:
+  - `GET /players`
+  - `GET /players/:id`
 
-*Example: https://crew-team-scraper.herokuapp.com/*
+## Data Returned
 
-### To GET a Specific Player by ID:
+Each player record currently includes:
 
-_____
+- `id`
+- `name`
+- `num`
+- `pos`
+- `role`
+- `img`
+- `bio_url`
+- `stats_url`
+- `source`
+- `age`
+- `birthplace`
+- `height`
+- `weight`
 
-Access the host site and then call the REST endpoint '/players/:id'. Note that this ID is *NOT* the players jersey number but rather the ID in the dataset.
+Notes:
+- `age`, `birthplace`, `height`, and `weight` are currently returned as `null` because they are not present on the roster page markup being scraped.
+- Image URLs are pulled from lazy-loaded image attributes on the source roster cards.
 
-*Example: https://crew-team-scraper.herokuapp.com/player/5*
+## Prerequisites
 
+- `asdf` (recommended, because project uses `.tool-versions`)
+- Ruby `4.0.1`
+- Bundler (installed with Ruby)
 
+## Local Setup
 
-### Notes
-_____
+```bash
+asdf install
+```
 
-*Please note that the Columbus Crew Logo shown above belongs to the Columbus Crew Football Club and is only used here to add some style to the documentation.*
+## Run With Makefile (Recommended)
 
-[logo]: http://content.sportslogos.net/logos/9/324/full/1002_columbus_crew-primary-2015.png "Crew Logo"
+```bash
+make start
+```
+
+This will:
+- run `bundle install`
+- start the app with `rackup` on port `9393`
+- write PID to `.app.pid`
+- write logs to `.app.log`
+
+Useful commands:
+
+```bash
+make status
+make stop
+```
+
+## Run Manually
+
+```bash
+asdf exec bundle install
+asdf exec bundle exec rackup -p 9393
+```
+
+Open:
+- `http://localhost:9393/`
+
+## UI Features
+
+- `View Raw JSON` button opens a modal.
+- Modal fetches `/players` and displays formatted JSON.
+- Modal closes via:
+  - `Close` button
+  - clicking the backdrop
+  - `Esc` key
+
+## Troubleshooting
+
+- If old/stale data appears, ensure only one app process is running and restart with `make stop` then `make start`.
+- If startup fails, inspect `.app.log`.
+- If scraping breaks, the source site likely changed markup; update selectors in [`player.rb`](/Users/briancrosby/Projects/PG_Crew_Scraper/player.rb).

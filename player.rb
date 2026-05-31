@@ -1,51 +1,83 @@
-require 'json'
+# frozen_string_literal: true
+
 require 'nokogiri'
 require 'open-uri'
+require 'uri'
 
-class Player
-
-  @@PAGE_URL = 'http://www.columbuscrewsc.com/players'
-  @@page = Nokogiri::HTML(open(@@PAGE_URL))
-
-  def initialize
-    @players = self.getPlayers
-  end
+class PlayerRepository
+  PAGE_URL = 'https://www.columbuscrew.com/roster/'
 
   def all
-    @players
+    parse_players
   end
 
-  def find id
-    index = id.to_i - 1
-    @players[index]
+  def find(id)
+    integer_id = Integer(id)
+    raise ArgumentError, 'id must be positive' if integer_id <= 0
+
+    all.find { |player| player[:id] == integer_id }
   end
 
-  def getPlayers
-      all = @@page.css(".player_list .row")
+  private
 
-      if all.length > 0
-        players = Array.new
+  def parse_players
+    page.css('.oc-c-promo').each_with_index.with_object([]) do |(card, index), players|
+      name = normalize(card.at_css('.fa-text__title')&.text)
+      next if name.empty?
 
-        all.each_with_index.map do |player, index|
+      number_position_text = normalize(card.at_css('.fa-text__body h1')&.text)
+      number, position = parse_number_position(number_position_text)
 
-          if index != 0
-            name = player.css(".player_info").css(".name").css("a").text.strip
-            num = player.css(".player_info").css(".jersey").text.strip
-            pos = player.css(".player_info").css(".position").text.strip
-            age = player.css(".player_info").css(".age").text.strip
-            birthplace = player.css(".player_info").css(".hometown").text.strip
-            height = player.css(".player_info").css(".height").text.strip
-            weight = player.css(".player_info").css(".weight").text.strip
-            img = player.css(".rounded_image_container").css("a").css(".rounded_image").attr('src')
-
-            player = {id: index, name: name, num: num, pos: pos, age: age, birthplace: birthplace, height: height, weight: weight, img: img}
-            players.push(player)
-
-          end
-        end
-        #players.to_json
-        players
-      end
+      players << {
+        id: index + 1,
+        name: name,
+        num: number,
+        pos: position,
+        role: position,
+        age: nil,
+        birthplace: nil,
+        height: nil,
+        weight: nil,
+        img: find_image_url(card),
+        bio_url: absolute_url(card.at_css('a[title="BIO"]')&.[]('href')),
+        stats_url: absolute_url(card.at_css('a[title="STATS"]')&.[]('href')),
+        source: PAGE_URL
+      }
+    end
   end
 
+  def page
+    @page ||= Nokogiri::HTML(URI.open(PAGE_URL, read_timeout: 15, open_timeout: 15))
+  end
+
+  def parse_number_position(text)
+    return [nil, nil] if text.empty?
+
+    cleaned = text.gsub('#', '').strip
+    number_part, position_part = cleaned.split('-', 2).map { |v| normalize(v) }
+    [presence(number_part), presence(position_part)]
+  end
+
+  def find_image_url(card)
+    image = card.at_css('.fm-card__media img')
+    raw = image&.[]('data-src') || image&.[]('src')
+    absolute_url(raw)
+  end
+
+  def absolute_url(value)
+    return nil if value.nil? || value.strip.empty?
+
+    URI.join(PAGE_URL, value.strip).to_s
+  rescue URI::InvalidURIError
+    nil
+  end
+
+  def normalize(value)
+    value.to_s.gsub(/\s+/, ' ').strip
+  end
+
+  def presence(value)
+    normalized = normalize(value)
+    normalized.empty? ? nil : normalized
+  end
 end

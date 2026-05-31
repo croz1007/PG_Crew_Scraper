@@ -1,8 +1,8 @@
-# Rakefile
-require "sinatra/activerecord/rake"
+# frozen_string_literal: true
 
-namespace :db do
-  task :load_config do
-    require "./scraper"
-  end
+require 'rack'
+
+desc 'Run the app locally'
+task :server do
+  sh 'bundle exec rackup'
 end

@@ -1,30 +1,36 @@
-!!!
+!!! 5
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Columbus Crew Team Roster API
-    %link{:href => "../stylesheets/styles.css", :rel => "stylesheet", :type => "text/css"}/
+    %meta{ charset: 'UTF-8' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
+    %title Columbus Crew Roster API
+    %link{ href: '/stylesheets/styles.css', rel: 'stylesheet', type: 'text/css' }
   %body
-    #wrapper
-      %h1 Columbus Crew Players List
-      %hr/
-      %form{:action => "/players"}
-        %button See JSON Data
-      #players
-    %script#playerTemplate{:type => "text/x-jquery-tmpl"}
-      :plain
-        <a href="/player/${ id }" class="card">
-        <h3>${ name } : #${num} - ${ pos }</h3>
-        <hr />
-        <p><strong>Age: </strong> ${ age }</p>
-        <p><strong>Height: </strong> ${ height }</p>
-        <p><strong>Weight: </strong> ${ weight }</p>
-        <p><strong>Birthplace: </strong> ${ birthplace }</p>
-        </a>
-    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"}
-    %script{:src => "js/jquery.tmpl.js"}
-    %script{:src => "js/scripts.js"}
-    :javascript
-      $(function(){
-        getPlayers();
-      });
+    %main.container
+      %h1 Columbus Crew Roster
+      %p.subhead
+        Live scrape target:
+        %code https://www.columbuscrew.com/roster/
+      %p
+        API endpoints:
+        %code /players
+        and
+        %code /players/:id
+      %button#view-json.button{ type: 'button' } View Raw JSON
+      %section#players.cards{ 'aria-live': 'polite' }
+
+    #json-modal.modal.hidden{ 'aria-hidden': 'true' }
+      .modal-backdrop{ 'data-close-modal': 'true' }
+      .modal-dialog{ role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'json-modal-title' }
+        .modal-header
+          %h2#json-modal-title Players JSON
+          %button#close-json-modal.modal-close{ type: 'button', 'aria-label': 'Close JSON modal' } Close
+        %pre#json-output.modal-body Loading...
+
+    #player-focus-modal.focus-modal.hidden{ 'aria-hidden': 'true' }
+      .focus-backdrop{ 'data-close-player-modal': 'true' }
+      .focus-panel{ role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'player-focus-title' }
+        %button#close-player-focus.focus-close{ type: 'button', 'aria-label': 'Close player details' } Close
+        #player-focus-content
+
+    %script{ src: '/js/scripts.js', defer: true }

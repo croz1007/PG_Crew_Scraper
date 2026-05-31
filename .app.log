@@ -1,0 +1,10 @@
+Puma starting in single mode...
+* Puma version: 8.0.2 ("Into the Arena")
+* Ruby version: ruby 4.0.1 (2026-01-13 revision e04267a14b) +PRISM [x86_64-darwin25]
+*  Min threads: 0
+*  Max threads: 5
+*  Environment: development
+*          PID: 32977
+* Listening on http://127.0.0.1:9393
+* Listening on http://[::1]:9393
+Use Ctrl-C to stop

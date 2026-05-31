@@ -1,13 +1,11 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-ruby '4.0.1'
+ruby '>= 3.2.0'
 
-gem 'rack', '~> 1.5'
-gem 'sinatra', '~> 1.4', '>= 1.4.7'
-gem 'sass', '~> 3.4', '>= 3.4.22'
-gem 'haml', '~> 4.0', '>= 4.0.7'
-gem 'activerecord', "~> 4.1.0"
-gem "sinatra-activerecord"
-gem 'nokogiri'
-gem 'pg', '~> 1.6', '>= 1.6.3'
-gem "rake"
+gem 'sinatra', '~> 4.0'
+gem 'rackup'
+gem 'puma'
+gem 'haml', '~> 6.3'
+gem 'nokogiri', '~> 1.16'
+gem 'rake', '~> 13.2'
+gem 'json'
