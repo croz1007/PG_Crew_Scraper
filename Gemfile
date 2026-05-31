@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby '2.3.3'
+ruby '4.0.1'
 
 gem 'rack', '~> 1.5'
 gem 'sinatra', '~> 1.4', '>= 1.4.7'
@@ -9,5 +9,5 @@ gem 'haml', '~> 4.0', '>= 4.0.7'
 gem 'activerecord', "~> 4.1.0"
 gem "sinatra-activerecord"
 gem 'nokogiri'
-gem 'pg', '~> 0.18.2'
+gem 'pg', '~> 1.6', '>= 1.6.3'
 gem "rake"
